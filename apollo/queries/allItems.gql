@@ -1,0 +1,10 @@
+{
+  items {
+    id
+    title
+    price
+    description
+    image
+    largeImage
+  }
+}

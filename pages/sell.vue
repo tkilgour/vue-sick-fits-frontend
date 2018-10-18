@@ -1,10 +1,14 @@
 <template>
-  <p>Sell!</p>
+  <CreateItem />
 </template>
 
 <script>
-export default {
+import CreateItem from "../components/CreateItem";
 
+export default {
+  components: {
+    CreateItem
+  }
 }
 </script>
 

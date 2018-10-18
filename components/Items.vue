@@ -1,7 +1,7 @@
 <template>
   <div class="center">
     <p>Items!</p>
-    <ApolloQuery :query="ALL_ITEMS_QUERY">
+    <ApolloQuery :query="require('@/apollo/queries/allItems.gql')">
       <template slot-scope="{ result: { data, loading, error } }">
         <p v-if="loading">Loading...</p>
         <p v-if="error">Error: {{error.message}}</p>
@@ -22,20 +22,6 @@ export default {
   components: {
     Item
   },
-  data() {
-    return {
-      ALL_ITEMS_QUERY: gql`{
-        items {
-          id
-          title
-          price
-          description
-          image
-          largeImage
-        }
-      }`
-    }
-  }
 }
 </script>
 
