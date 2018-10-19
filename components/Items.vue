@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <p>Items!</p>
+    <Pagination />
     <ApolloQuery :query="require('@/apollo/queries/allItems.gql')">
       <template slot-scope="{ result: { data, error }, isLoading }">
         <p v-if="isLoading">Loading...</p>
@@ -10,17 +10,20 @@
         </div>
       </template>
     </ApolloQuery>
+    <Pagination />
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import Item from './Item'
+import Pagination from "./Pagination";
 
 export default {
   name: "Items",
   components: {
-    Item
+    Item,
+    Pagination
   },
 }
 </script>

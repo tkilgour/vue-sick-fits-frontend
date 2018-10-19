@@ -1,0 +1,7 @@
+{
+  itemsConnection {
+    aggregate {
+      count
+    }
+  }
+}
