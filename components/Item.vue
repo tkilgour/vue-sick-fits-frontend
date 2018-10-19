@@ -9,16 +9,20 @@
     <div class="buttonList">
       <nuxt-link :to="{ path: '/update', query: { id: item.id }}">Edit ✏️</nuxt-link>
       <button>Add To Cart</button>
-      <button>Delete</button>
+      <DeleteItem :id="item.id" buttonText="Delete This Item"></DeleteItem>
     </div>
   </div>
 </template>
 
 <script>
 import formatMoney from "../lib/formatMoney";
+import DeleteItem from "./DeleteItem";
 
 export default {
   name: 'Item',
+  components: {
+    DeleteItem
+  },
   props: {
     item: Object
   },
@@ -79,6 +83,9 @@ export default {
       border: 0;
       font-size: 1rem;
       padding: 1rem;
+    }
+    div {
+      padding: 0;
     }
   }
 }

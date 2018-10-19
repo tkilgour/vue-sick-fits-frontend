@@ -1,4 +1,4 @@
-query SINGLE_ITEM_QUERY($id: ID!) {
+query($id: ID!) {
   item(where: { id: $id }) {
     id
     title
