@@ -2,8 +2,8 @@
   <div class="center">
     <p>Items!</p>
     <ApolloQuery :query="require('@/apollo/queries/allItems.gql')">
-      <template slot-scope="{ result: { data, loading, error } }">
-        <p v-if="loading">Loading...</p>
+      <template slot-scope="{ result: { data, error }, isLoading }">
+        <p v-if="isLoading">Loading...</p>
         <p v-if="error">Error: {{error.message}}</p>
         <div v-else-if="data" class="items-list">
           <Item v-for="item of data.items" :key="item.id" :item="item" class="item" />

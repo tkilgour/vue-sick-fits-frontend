@@ -64,6 +64,7 @@ import gql from 'graphql-tag'
 import Error from './ErrorMessage'
 
 export default {
+  name: 'CreateItem',
   components: {
     Error
   },

@@ -18,6 +18,7 @@
 import formatMoney from "../lib/formatMoney";
 
 export default {
+  name: 'Item',
   props: {
     item: Object
   },
