@@ -1,9 +1,25 @@
 <template>
-  <ApolloMutation :mutation="require('@/apollo/mutations/createItem.gql')" :variables="state" @done="handleMutate($event)">
+  <ApolloMutation 
+    :mutation="require('@/apollo/mutations/createItem.gql')" 
+    :variables="{title, description, image, largeImage, price}" 
+    @done="handleMutate($event)"
+  >
     <template slot-scope="{ mutate, loading, error }">
       <form @submit.prevent="mutate">
         <Error :error="error" />
         <fieldset :disabled="loading" :aria-busy="loading">
+          <label for="file">
+            Image
+            <input
+              type="file"
+              id="file"
+              name="file"
+              placeholder="Upload an image"
+              required
+              @change="uploadFile"
+            />
+            <img v-if="image" width="200" :src="image" alt="Upload Preview">
+          </label>
           <label for="title">
             Title
             <input
@@ -12,7 +28,7 @@
               name="title"
               placeholder="Title"
               required
-              v-model.trim="state.title"
+              v-model.trim="title"
             />
           </label>
           <label for="price">
@@ -23,7 +39,7 @@
               name="price"
               placeholder="Price"
               required
-              v-model.number="state.price"
+              v-model.number="price"
             />
           </label>
           <label for="description">
@@ -33,7 +49,7 @@
               name="description"
               placeholder="Description"
               required
-              v-model.trim="state.description"
+              v-model.trim="description"
             />
           </label>
           <button type="submit">Submit</button>
@@ -53,16 +69,30 @@ export default {
   },
   data() {
     return {
-      state: {
-        title: "La Croix – Lemon",
-        description: "Delicious Lemony goodness – naturally essenced, of course!",
-        image: "",
-        largeImage: "",
-        price: 87
-      }
+      title: "La Croix – Lemon",
+      description: "Delicious Lemony goodness – naturally essenced, of course!",
+      image: "",
+      largeImage: "",
+      price: 87
     }
   },
   methods: {
+    async uploadFile(e) {
+      console.log('uploading file...');
+      const files = e.target.files;
+      const data = new FormData();
+      data.append('file', files[0]);
+      data.append('upload_preset', 'sick-fits');
+
+      const res = await fetch('https://api.cloudinary.com/v1_1/tkilgour/image/upload', {
+        method: 'POST',
+        body: data
+      });
+      const file = await res.json();
+      console.log(file);
+      this.image = file.secure_url;
+      this.largeImage = file.eager[0].secure_url;
+    },
     handleMutate(res) {
       this.$router.push({
         path: '/item',
