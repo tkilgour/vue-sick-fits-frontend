@@ -4,5 +4,6 @@ query($id: ID!) {
     title
     price
     description
+    largeImage
   }
 }

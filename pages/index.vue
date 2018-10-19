@@ -6,6 +6,7 @@
 import Items from '../components/Items'
 
 export default {
+  name: 'Home',
   components: {
     Items
   }
