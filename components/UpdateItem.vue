@@ -1,62 +1,56 @@
 <template>
-  <ApolloQuery 
-    :query="require('@/apollo/queries/singleItem.gql')" 
-    :variables="{id: item.id}"
-  >
-    <template slot-scope="{ result: { data, error }, isLoading }">
-      <p v-if="isLoading">Loading...</p>
-      <p v-else-if="!data.item">No Item Found for ID {{item.id}}</p>
-      <ApolloMutation
-        v-else
-        :mutation="require('@/apollo/mutations/updateItem.gql')" 
-        :variables="item" 
-      >
-        <template slot-scope="{ mutate, loading, error }">
-          <form @submit.prevent="updateItem(mutate)">
-            <Error :error="error" />
-            <fieldset :disabled="loading" :aria-busy="loading">
-              <label for="title">
-                Title
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  placeholder="Title"
-                  required
-                  :value="data.item.title"
-                  @input="handleChange"
-                />
-              </label>
-              <label for="price">
-                Price
-                <input
-                  type="number"
-                  id="price"
-                  name="price"
-                  placeholder="Price"
-                  required
-                  :value="data.item.price"
-                  @input="handleChange"
-                />
-              </label>
-              <label for="description">
-                Description
-                <textarea
-                  id="description"
-                  name="description"
-                  placeholder="Description"
-                  required
-                  :value="data.item.description"
-                  @input="handleChange"
-                />
-              </label>
-              <button type="submit">Sav{{ loading ? 'ing' : 'e'}} Changes</button>
-            </fieldset>
-          </form>
-        </template>
-      </ApolloMutation>
-    </template>
-  </ApolloQuery>
+  <div>
+    <p v-if="!item">No Item Found for ID {{id}}</p>
+    <ApolloMutation
+      v-else
+      :mutation="require('@/apollo/mutations/updateItem.gql')" 
+      :variables="item"
+    >
+      <template slot-scope="{ mutate, loading, error }">
+        <form @submit.prevent="updateItem(mutate)">
+          <Error :error="error" />
+          <fieldset :disabled="loading" :aria-busy="loading">
+            <label for="title">
+              Title
+              <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Title"
+                required
+                :value="item.title"
+                @input="handleChange"
+              />
+            </label>
+            <label for="price">
+              Price
+              <input
+                type="number"
+                id="price"
+                name="price"
+                placeholder="Price"
+                required
+                :value="item.price"
+                @input="handleChange"
+              />
+            </label>
+            <label for="description">
+              Description
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Description"
+                required
+                :value="item.description"
+                @input="handleChange"
+              />
+            </label>
+            <button type="submit">Sav{{ loading ? 'ing' : 'e'}} Changes</button>
+          </fieldset>
+        </form>
+      </template>
+    </ApolloMutation>
+  </div>
 </template>
 
 <script>
@@ -65,15 +59,12 @@ import Error from './ErrorMessage'
 
 export default {
   name: 'UpdateItem',
+  props: {
+    item: Object,
+    id: String
+  },
   components: {
     Error
-  },
-  data() {
-    return {
-      item: {
-        id: this.$route.query.id,
-      }
-    }
   },
   methods: {
     async updateItem(updateItemMutation) {

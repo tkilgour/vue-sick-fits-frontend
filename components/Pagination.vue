@@ -1,27 +1,22 @@
 <template>
-  <ApolloQuery :query="require('@/apollo/queries/pagination.gql')" @result="({data}) => count = data.itemsConnection.aggregate.count">
-    <template slot-scope="{ result: {data, error}, isLoading}">
-      <p v-if="isLoading">Loading...</p>
-      <div v-else class="pagination-styles">
-        <nuxt-link :to="{
-          path: 'items',
-          query: { page: page - 1 }
-        }" class="prev" :aria-disabled="page <= 1">
-          ← Prev
-        </nuxt-link>
-        <p>
-          Page {{page}} of {{pages}}
-        </p>
-        <p>{{count}} Item{{ count > 1 ? 's' : ''}} Total</p>
-        <nuxt-link :to="{
-          path: 'items',
-          query: { page: page + 1 }
-        }" class="next" :aria-disabled="page >= pages">
-          Next →
-        </nuxt-link>
-      </div>
-    </template>
-  </ApolloQuery>
+  <div class="pagination-styles">
+    <nuxt-link :to="{
+      path: 'items',
+      query: { page: page - 1 }
+    }" class="prev" :aria-disabled="page <= 1">
+      ← Prev
+    </nuxt-link>
+    <p>
+      Page {{page}} of {{pages}}
+    </p>
+    <p>{{count}} Item{{ count > 1 ? 's' : ''}} Total</p>
+    <nuxt-link :to="{
+      path: 'items',
+      query: { page: page + 1 }
+    }" class="next" :aria-disabled="page >= pages">
+      Next →
+    </nuxt-link>
+  </div>
 </template>
 
 <script>
@@ -29,10 +24,8 @@ import { perPage } from "../config";
 
 export default {
   name: 'Pagination',
-  data() {
-    return {
-      count: null
-    }
+  props: {
+    count: Number
   },
   computed: {
     page() {

@@ -1,16 +1,16 @@
 <template>
   <div class="center">
-    <Pagination />
-    <ApolloQuery :query="require('@/apollo/queries/allItems.gql')">
+    <Pagination :count="count" />
+    <!-- <ApolloQuery :query="require('@/apollo/queries/allItems.gql')">
       <template slot-scope="{ result: { data, error }, isLoading }">
         <p v-if="isLoading">Loading...</p>
-        <p v-if="error">Error: {{error.message}}</p>
-        <div v-else-if="data" class="items-list">
-          <Item v-for="item of data.items" :key="item.id" :item="item" class="item" />
+        <p v-if="error">Error: {{error.message}}</p> -->
+        <div v-if="items" class="items-list">
+          <Item v-for="item of items" :key="item.id" :item="item" class="item" />
         </div>
-      </template>
-    </ApolloQuery>
-    <Pagination />
+      <!-- </template>
+    </ApolloQuery> -->
+    <Pagination :count="count" />
   </div>
 </template>
 
@@ -21,6 +21,10 @@ import Pagination from "./Pagination";
 
 export default {
   name: "Items",
+  props: {
+    items: Array,
+    count: Number
+    },
   components: {
     Item,
     Pagination

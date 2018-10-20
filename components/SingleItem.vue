@@ -1,21 +1,14 @@
 <template>
-  <ApolloQuery 
-    :query="require('@/apollo/queries/singleItem.gql')"
-    :variables="{id}"
-    @result="({data}) => title = data.item.title"
-  >
-    <template slot-scope="{ result: { data, error }, isLoading}">
-      <Error v-if="error" :error="error" />
-      <p v-else-if="isLoading">Loading...</p>
-      <div v-else class="single-item-styles">
-        <img :src="data.item.largeImage" :alt="data.item.title">
-        <div class="details">
-          <h2>Viewing {{ data.item.title }}</h2>
-          <p>{{ data.item.description }}</p>
-        </div>
+  <div>
+    <p v-if="!item">No Item Found for {{id}}</p>
+    <div v-else class="single-item-styles">
+      <img :src="item.largeImage" :alt="item.title">
+      <div class="details">
+        <h2>Viewing {{ item.title }}</h2>
+        <p>{{ item.description }}</p>
       </div>
-    </template>
-  </ApolloQuery>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -29,7 +22,8 @@ export default {
     }
   },
   props: {
-    id: String
+    id: String,
+    item: Object
   },
   components: {
     Error
