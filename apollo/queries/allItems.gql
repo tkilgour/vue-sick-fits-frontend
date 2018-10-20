@@ -7,9 +7,4 @@
     image
     largeImage
   }
-  itemsConnection {
-    aggregate {
-      count
-    }
-  }
 }

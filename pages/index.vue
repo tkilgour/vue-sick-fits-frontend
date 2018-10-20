@@ -5,6 +5,7 @@
 <script>
 import Items from '../components/Items'
 import ALL_ITEMS_QUERY from '../apollo/queries/allItems.gql';
+import PAGINATION_QUERY from '../apollo/queries/pagination.gql';
 
 export default {
   name: 'Home',
@@ -12,10 +13,11 @@ export default {
     Items
   },
   async asyncData({app}) {
-    const { data } = await app.apolloProvider.defaultClient.query({ query: ALL_ITEMS_QUERY})
+    const items = await app.apolloProvider.defaultClient.query({ query: ALL_ITEMS_QUERY})
+    const pagination = await app.apolloProvider.defaultClient.query({ query: PAGINATION_QUERY})
     return {
-      count: data.itemsConnection.aggregate.count,
-      items: data.items
+      items: items.data.items,
+      count: pagination.data.itemsConnection.aggregate.count,
     }
   }
 }
