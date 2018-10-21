@@ -21,7 +21,7 @@
 export default {
   name: "DisplayError",
   props: {
-    error: Object,
+    error: Error,
     default: {}
   }
 }

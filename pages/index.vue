@@ -29,6 +29,3 @@ export default {
   watchQuery: ['page']
 }
 </script>
-
-<style>
-</style>
